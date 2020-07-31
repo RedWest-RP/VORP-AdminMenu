@@ -21,7 +21,7 @@ namespace vorpadminmenu_sv
 
         private async Task CheckBanneds()
         {
-            await Delay(300000); // 5 minutos
+            await Delay(15000); // 3.5 minutos
             for (int i=0; i < userBanneds.Count(); i++)
             {
                 if (!userBanneds[i].Permanent)
@@ -44,6 +44,14 @@ namespace vorpadminmenu_sv
 
             string steam = player.Identifiers["steam"];
             string license = player.Identifiers["license"];
+
+            if (steam == null || license == null)
+            {
+                deferrals.done(string.Format(LoadConfig.Langs["NoSteam"]));
+                setKickReason(string.Format(LoadConfig.Langs["NoSteam"]));
+                deferrals.done();
+                return;
+            }
 
             if (userBanneds.Any(x => x.Steam.Contains(steam)))
             {
@@ -116,7 +124,7 @@ namespace vorpadminmenu_sv
                     permanent = 0;
                     if (temp.EndsWith("Y"))
                     {
-                        Debug.WriteLine("Entra en el try");
+                        //Debug.WriteLine("Entra en el try");
                         unban = banned.AddYears(int.Parse(temp.Remove(temp.Length - 1)));
                     }
                     else if (temp.EndsWith("M"))
@@ -133,7 +141,7 @@ namespace vorpadminmenu_sv
                     }
                     else if (temp.EndsWith("m"))
                     {
-                        Debug.WriteLine("Entra en el try");
+                        //Debug.WriteLine("Entra en el try");
                         unban = banned.AddMinutes(int.Parse(temp.Remove(temp.Length - 1)));
                     }
                     else
@@ -193,6 +201,7 @@ namespace vorpadminmenu_sv
         {
             PlayerList pl = new PlayerList();
             Player p = pl[handle];
+            Debug.WriteLine("dbg: found user %s", p);
             return p;
         }
     }

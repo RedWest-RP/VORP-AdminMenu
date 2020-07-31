@@ -126,6 +126,11 @@ namespace vorpadminmenu_cl.Functions.Database
             Inventory.LoadItems(items);
         }
 
-        
+        public static void WlPlayer(List<object> args)
+        {
+            TriggerServerEvent("vorp:getInventory", args);
+        }
+
+
     }
 }

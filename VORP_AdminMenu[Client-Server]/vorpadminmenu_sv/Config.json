@@ -1,5 +1,5 @@
 {
-  "defaultlang": "En", // Set your language
+  "defaultlang": "Ru", // Set your language
   "key": "0x446258B6", // Set the key to open menu->Default:DELETE
   "TpviewDelviewKey": "0xCEE12B50",
 
@@ -19,6 +19,7 @@
   //Comands booster side
   "Golden": "golden",
   "Gm": "gm",
+  "Dr": "dr",
   "Noclip": "n",
   "Mclip": "m",
   "Thor": "thor",

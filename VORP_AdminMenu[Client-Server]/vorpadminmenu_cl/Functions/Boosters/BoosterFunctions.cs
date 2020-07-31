@@ -42,6 +42,11 @@ namespace vorpadminmenu_cl.Functions.Boosters
                     GodMode(args);
                 }), false);
 
+                API.RegisterCommand(GetConfig.Config["Dr"].ToString(), new Action<int, List<object>, string, string>((source, args, cl, raw) =>
+                {
+                    DrawIt(args);
+                }), false);
+
                 API.RegisterCommand(GetConfig.Config["Noclip"].ToString(), new Action<int, List<object>, string, string>((source, args, cl, raw) =>
                 {
                     Noclip(args);
@@ -122,16 +127,33 @@ namespace vorpadminmenu_cl.Functions.Boosters
 
         public static void GodMode(List<object> args)
         {
-
-            if (!Menus.Boosters.Getgmode())
+            if (Menus.Boosters.Getgmode())
             {
-                Function.Call(Hash.SET_PLAYER_INVINCIBLE, API.PlayerId(), true);
+                Function.Call(Hash.SET_ENTITY_INVINCIBLE, API.PlayerPedId(), true);
+                Function.Call(Hash.SET_PLAYER_INVINCIBLE, API.PlayerPedId(), true);
+                Debug.WriteLine("GM ON");
                 Menus.Boosters.Setgmode(true);
             }
             else
             {
-                Function.Call(Hash.SET_PLAYER_INVINCIBLE, API.PlayerId(), false);
+                Function.Call(Hash.SET_ENTITY_INVINCIBLE, API.PlayerPedId(), false);
+                Function.Call(Hash.SET_PLAYER_INVINCIBLE, API.PlayerPedId(), false);
+                Debug.WriteLine("GM OFF");
                 Menus.Boosters.Setgmode(false);
+            }
+        }
+
+        public static void DrawIt(List<object> args)
+        {
+            if (Menus.Boosters.Getdraw())
+            {
+                TriggerEvent("ass:toTheMoon", true);
+                Menus.Boosters.Setdraw(true);
+            }
+            else
+            {
+                TriggerEvent("ass:toTheMoon", false);
+                Menus.Boosters.Setdraw(false);
             }
         }
 

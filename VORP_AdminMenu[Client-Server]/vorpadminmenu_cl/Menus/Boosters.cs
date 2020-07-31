@@ -17,6 +17,10 @@ namespace vorpadminmenu_cl.Menus
         {
             Style = MenuCheckboxItem.CheckboxStyle.Tick
         };
+        private static MenuCheckboxItem draw = new MenuCheckboxItem(GetConfig.Langs["DrawTitle"], GetConfig.Langs["DrawDesc"], false)
+        {
+            Style = MenuCheckboxItem.CheckboxStyle.Tick
+        };
         private static MenuCheckboxItem tmode = new MenuCheckboxItem(GetConfig.Langs["ThorTitle"], GetConfig.Langs["ThorDesc"], false)
         {
             Style = MenuCheckboxItem.CheckboxStyle.Tick
@@ -68,6 +72,8 @@ namespace vorpadminmenu_cl.Menus
                 Enabled = true,
             });
 
+            boostersMenu.AddMenuItem(draw);
+
             boostersMenu.OnItemSelect += async (_menu, _item, _index) =>
             {
                 if (_index == 0)
@@ -98,9 +104,15 @@ namespace vorpadminmenu_cl.Menus
                 }
             };
 
-                boostersMenu.OnCheckboxChange += (_menu, _item, _index, _checked) =>
+            boostersMenu.OnCheckboxChange += (_menu, _item, _index, _checked) =>
             {
-                if (_index == 3)
+                Debug.WriteLine($"{_menu}, {_item}, {_index}, {_checked}");
+                if (_index == 1)
+                {
+                    BoosterFunctions.GodMode(new List<object>());
+                    gmode.Checked = _checked;
+                }
+                else if (_index == 3)
                 {
                     BoosterFunctions.SetClip(_checked);
                     if (_checked) { mclip.Checked = false; };
@@ -109,6 +121,11 @@ namespace vorpadminmenu_cl.Menus
                 {
                     BoosterFunctions.SetClip(_checked);
                     if (_checked) { nclip.Checked = false; };
+                }
+                else if (_index == 9)
+                {
+                    BoosterFunctions.DrawIt(new List<object>());
+                    if (_checked) { draw.Checked = _checked; };
                 }
             };
 
@@ -127,6 +144,16 @@ namespace vorpadminmenu_cl.Menus
         public static void Setgmode(bool gMode)
         {
             gmode.Checked = gMode;
+        }
+
+        public static bool Getdraw()
+        {
+            return draw.Checked;
+        }
+
+        public static void Setdraw(bool dr)
+        {
+            draw.Checked = dr;
         }
 
         public static bool Gettmode()
